@@ -1,34 +1,63 @@
 <html>
 <head>
-    <title>Glücksrad</title>
+    <title>Kaipfister Spiel</title>
     <style>
-        #gluecksrad {
-            width: 200px;
-            height: 200px;
+        #spielbereich {
+            width: 400px;
+            height: 400px;
             background-color: #f0f0f0;
-            border: 5px solid #333;
+            border: 2px solid #333;
+            position: relative;
+        }
+
+        #ziel {
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            position: absolute;
+            top: 175px;
+            left: 175px;
             border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 24px;
+        }
+
+        #logo {
+            width: 50px;
+            height: 50px;
+            background-color: blue;
+            position: absolute;
+            top: 175px;
+            left: 10px;
+            border-radius: 50%;
             cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <h1>Glücksrad</h1>
-    <div id="gluecksrad" onclick="drehen()">Drehen</div>
+    <h1>Kaipfister Spiel</h1>
+    <div id="spielbereich">
+        <div id="ziel"></div>
+        <div id="logo" draggable="true" ondragstart="startDrag(event)"></div>
+    </div>
 
     <script>
-        var segmente = ["Gewonnen!", "Verloren", "Nochmal versuchen", "Glück gehabt", "Leider Pech"];
+        var logo = document.getElementById("logo");
+        var ziel = document.getElementById("ziel");
 
-        function drehen() {
-            var gluecksrad = document.getElementById("gluecksrad");
-            var zufallsIndex = Math.floor(Math.random() * segmente.length);
-            var gewinn = segmente[zufallsIndex];
-            gluecksrad.innerHTML = gewinn;
+        function startDrag(event) {
+            event.dataTransfer.setData("text/plain", event.target.id);
         }
+
+        ziel.addEventListener("dragover", function (event) {
+            event.preventDefault();
+        });
+
+        ziel.addEventListener("drop", function (event) {
+            event.preventDefault();
+            var draggedElementId = event.dataTransfer.getData("text/plain");
+            if (draggedElementId === "logo") {
+                alert("Gewonnen! Du hast das Kaipfister-Logo ins Ziel geworfen!");
+            }
+        });
     </script>
 </body>
 </html>
