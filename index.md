@@ -1,13 +1,3 @@
-<html>
-<head>
-    <title>Kaipfister Spiel</title>
-    <style>
-        #spielbereich {
-            width: 400px;
-            height: 400px;
-            background-color: #f0f0f0;
-            border: 2px solid #333;
-            position: relative;
         }
 
         #ziel {
