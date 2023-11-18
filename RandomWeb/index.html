@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Zufällige Webseite</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            background-color: #fff; /* Hintergrundfarbe im Standardmodus (hell) */
+            color: #000; /* Textfarbe im Standardmodus (dunkel) */
+        }
+        .content {
+            text-align: center;
+        }
+        .links {
+            margin-top: 20px;
+        }
+
+        /* Dark-Mode-Stile */
+        body.dark-mode {
+            background-color: #000; /* Hintergrundfarbe im Dark-Modus (dunkel) */
+            color: #fff; /* Textfarbe im Dark-Modus (hell) */
+        }
+
+        /* Kleine Schrift für die IP-Adresse */
+        .ip-address {
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // Zufällig entscheiden, ob die Seite betreten werden kann (50% Wahrscheinlichkeit)
+        var canEnter = Math.random() < 0.5;
+
+        // Überprüfen, ob der Dark-Modus aktiviert ist
+        var prefersDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        // Festlegen der Klassen für den Dark-Modus
+        if (prefersDarkMode) {
+            document.body.classList.add('dark-mode');
+        }
+
+        if (canEnter) {
+            // Wenn ja, eine zufällige Entscheidung treffen (Lustig oder Ernst)
+            var isFunny = Math.random() < 0.5;
+
+            if (isFunny) {
+                // Lustige Nachricht anzeigen
+                var funnyTexts = [
+                    "Diese Seite ist ein totaler Witz!",
+                    "Lachen ist gesund, oder?",
+                    "Bereit für eine Portion Humor?",
+                    "Lass uns zusammen lachen!",
+                    "Hier kommt der Spaß!"
+                ];
+
+                var randomFunnyIndex = Math.floor(Math.random() * funnyTexts.length);
+                var randomFunnyText = funnyTexts[randomFunnyIndex];
+
+                var contentDiv = document.createElement("div");
+                contentDiv.className = "content";
+                contentDiv.innerHTML = "<p>" + randomFunnyText + "</p>";
+                document.body.appendChild(contentDiv);
+            } else {
+                // Ernsthaften Text anzeigen
+                var seriousTexts = [
+                    "Willkommen!",
+                    "Diese Seite ist eine ernsthafte Angelegenheit.",
+                    "Bereit für einige Informationen?",
+                    "Sicherheit geht vor!",
+                    "Wir nehmen es hier ernst."
+                ];
+
+                var randomSeriousIndex = Math.floor(Math.random() * seriousTexts.length);
+                var randomSeriousText = seriousTexts[randomSeriousIndex];
+
+                var contentDiv = document.createElement("div");
+                contentDiv.className = "content";
+                contentDiv.innerHTML = "<p>" + randomSeriousText + "</p>";
+                document.body.appendChild(contentDiv);
+            }
+
+            // Links hinzufügen
+            var linksDiv = document.createElement("div");
+            linksDiv.className = "links";
+            linksDiv.innerHTML = "<a href='https://Kaipfister.de' target='_blank'>Webseite</a> | <a href='https://wasserpuncher.de' target='_blank'>Twitch</a> | <a href='https://github.com/wasserpuncher' target='_blank'>GitHub</a>";
+            document.body.appendChild(linksDiv);
+
+            // IP-Adresse des Besuchers anzeigen (in Kleinbuchstaben)
+            var ipAddress = "";
+            
+            // Die IP-Adresse des Besuchers abrufen (Client-seitig)
+            fetch('https://api64.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                ipAddress = data.ip.toLowerCase();
+                var ipAddressDiv = document.createElement("div");
+                ipAddressDiv.className = "ip-address";
+                ipAddressDiv.innerHTML = "Deine IP-Adresse: " + ipAddress;
+                document.body.appendChild(ipAddressDiv);
+            })
+            .catch(error => {
+                console.error('Fehler beim Abrufen der IP-Adresse: ' + error);
+            });
+        } else {
+            // Zufällige Fehlermeldung und zugehöriges Bild auswählen
+            var errorMessages = {
+                305: "Use Proxy",
+                400: "Bad Request",
+                401: "Unauthorized",
+                403: "Forbidden",
+                404: "Not Found",
+                408: "Request Timeout",
+                429: "Too Many Requests",
+                500: "Internal Server Error",
+                502: "Bad Gateway",
+                503: "Service Unvailable",
+                504: "Gateway Timeout"
+            };
+
+            var randomErrorCode = Object.keys(errorMessages)[Math.floor(Math.random() * Object.keys(errorMessages).length)];
+            var errorMessage = errorMessages[randomErrorCode];
+            var errorImage = "error" + randomErrorCode + ".jpg"; // Beispiel: error401.jpg für den Fehler 401
+
+            var contentDiv = document.createElement("div");
+            contentDiv.className = "content";
+            contentDiv.innerHTML = "<h1>" + randomErrorCode + " - " + errorMessage + "</h1><img src='" + errorImage + "' alt='" + errorMessage + "' />";
+            document.body.appendChild(contentDiv);
+        }
+    </script>
+</body>
+</html>
